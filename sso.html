@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSO</title>
+</head>
+<body>
+<div id="output"></div>
+
+
+</body>
+<script>
+    function displayURLParams() {
+        const params = new URLSearchParams(window.location.search);
+        const outputDiv = document.getElementById('output');
+
+        if ([...params].length === 0) {
+            outputDiv.innerText = 'URL 中没有参数。';
+            return;
+        }
+
+        const ul = document.createElement('ul');
+
+        for (const [key, value] of params.entries()) {
+            const li = document.createElement('li');
+            li.textContent = `${key}: ${value}`;
+            ul.appendChild(li);
+        }
+
+        outputDiv.appendChild(ul);
+    }
+
+    // 执行函数
+    displayURLParams();
+</script>
+</html>
