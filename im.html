@@ -16,10 +16,12 @@
     <a href="https://hataketed7977.github.io/html-demo/">Index</a>
     <a href="https://hataketed7977.github.io/html-demo/" target="_blank">Index Blck</a>
     <a href="https://hataketed7977.github.io/html-demo/base_iframe.html">Base Iframe</a>
+    
 
     <button onclick="openChat()">Chat</button>
     <button onclick="openNewTabIndex()">NewTabIndex</button>
     <button onclick="openNewIndex()">NewIndex</button>
+    <button onclick="back()">back</button>
 
     <script>
         function openChat() {
@@ -32,6 +34,10 @@
 
         function openNewIndex() {
             window.open("https://hataketed7977.github.io/html-demo/", "_self");
+        }
+
+        function back() {
+            history.back();
         }
     </script>
 </body>
