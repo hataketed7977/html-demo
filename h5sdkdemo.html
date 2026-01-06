@@ -97,6 +97,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                       scopeList: [],
                       appID: res.appid, // 网页应用必传
                       success(res) {
+                        console.log(JSON.stringify(res));
                         // window.h5sdk.ready回调函数在环境准备就绪时触发
                         // 调用 getUserInfo API 获取已登录用户的基本信息，详细文档参见https://open.feishu.cn/document/uYjL24iN/ucjMx4yNyEjL3ITM
                         tt.getUserInfo({
