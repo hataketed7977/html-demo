@@ -57,7 +57,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
         }
 
         // 调用config接口的当前网页url
-        const url = encodeURIComponent(location.href.split("#")[0]);
+        const url = location.href.split("#")[0];
         console.log("接入方前端将需要鉴权的url发给接入方服务端,url为:", url);
         const token = $('#token').val();
         // 向接入方服务端发起请求，获取鉴权参数（appId、timestamp、nonceStr、signature）
