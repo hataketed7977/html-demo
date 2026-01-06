@@ -81,7 +81,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
                     signature: res.signature,
-                    jsApiList: [],
+                    jsApiList: ['scope.userInfo'],
                     //鉴权成功回调
                     onSuccess: (res) => {
                         console.log(`config success: ${JSON.stringify(res)}`);
@@ -94,7 +94,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                 // 完成鉴权后，便可在 window.h5sdk.ready 里调用 JSAPI
                 window.h5sdk.ready(() => {
                     tt.requestAccess({
-                      scopeList: ['scope.userInfo'],
+                      scopeList: [],
                       appID: res.appid, // 网页应用必传
                       success(res) {
                         console.log(JSON.stringify(res));
