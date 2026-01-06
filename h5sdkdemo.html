@@ -94,7 +94,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                 // 完成鉴权后，便可在 window.h5sdk.ready 里调用 JSAPI
                 window.h5sdk.ready(() => {
                     tt.requestAccess({
-                      scopeList: [],
+                      scopeList: ['scope.userInfo'],
                       appID: res.appid, // 网页应用必传
                       success(res) {
                         console.log(JSON.stringify(res));
