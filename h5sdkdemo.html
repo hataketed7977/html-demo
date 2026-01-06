@@ -57,22 +57,18 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
         console.log("接入方前端将需要鉴权的url发给接入方服务端,url为:", url);
         const token = $('#token').val();
         // 向接入方服务端发起请求，获取鉴权参数（appId、timestamp、nonceStr、signature）
-        $.ajax({
-            url: "https://open.feishu.cn/anycross/trigger/callback/MGMyMDkxMmQ3MWIyZmI5ZmZhMTFjZTE5YmY4YTM3ZDA0",
-            type: "POST",                    // ⚠️ 必须 POST
-            contentType: "application/json", // ⚠️ 必须
-            dataType: "json",
-            data: JSON.stringify({
-                url,
-                token,
-            }),
-            timeout: 10000,
-            success: function (res) {
+        // 使用 fetch 获取 config 参数
+        fetch("https://open.feishu.cn/anycross/trigger/callback/MGMyMDkxMmQ3MWIyZmI5ZmZhMTFjZTE5YmY4YTM3ZDA0", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url, token })
+        })
+            .then(res => res.json())
+            .then(res => {
                 console.log(
                     "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
                 );
-                setTimeout(() => {
-                    // 通过error接口处理API验证失败后的回调
+                // 通过error接口处理API验证失败后的回调
                 window.h5sdk.error((err) => {
                     throw ("h5sdk error:", JSON.stringify(err));
                 });
@@ -124,10 +120,8 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                         throw `config failed: ${JSON.stringify(err)}`;
                     },
                 });
-                },0)
-            }
-
-        });
+            })
+            .catch(err => console.error("fetch error", err));
     }
 
 </script>
