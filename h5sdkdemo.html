@@ -71,7 +71,8 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                 console.log(
                     "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
                 );
-                // 通过error接口处理API验证失败后的回调
+                setTimeout(() => {
+                    // 通过error接口处理API验证失败后的回调
                 window.h5sdk.error((err) => {
                     throw ("h5sdk error:", JSON.stringify(err));
                 });
@@ -123,6 +124,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                         throw `config failed: ${JSON.stringify(err)}`;
                     },
                 });
+                },0)
             }
 
         });
