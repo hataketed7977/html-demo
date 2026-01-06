@@ -91,39 +91,39 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                         throw `config failed: ${JSON.stringify(err)}`;
                     },
                 });
+                // 完成鉴权后，便可在 window.h5sdk.ready 里调用 JSAPI
+                window.h5sdk.ready(() => {
+                    // window.h5sdk.ready回调函数在环境准备就绪时触发
+                    // 调用 getUserInfo API 获取已登录用户的基本信息，详细文档参见https://open.feishu.cn/document/uYjL24iN/ucjMx4yNyEjL3ITM
+                    tt.getUserInfo({
+                        // getUserInfo API 调用成功回调
+                        success(res) {
+                            console.log(`getUserInfo success: ${JSON.stringify(res)}`);
+                            // 单独定义的函数showUser，用于将用户信息展示在前端页面上
+                            showUser(res.userInfo);
+                        },
+                        // getUserInfo API 调用失败回调
+                        fail(err) {
+                            console.log(`getUserInfo failed:`, JSON.stringify(err));
+                        },
+                    });
+                    // 调用 showToast API 弹出全局提示框，详细文档参见https://open.feishu.cn/document/uAjLw4CM/uYjL24iN/block/api/showtoast
+                    tt.showToast({
+                        title: "鉴权成功",
+                        icon: "success",
+                        duration: 3000,
+                        success(res) {
+                            console.log("showToast 调用成功", res.errMsg);
+                        },
+                        fail(res) {
+                            console.log("showToast 调用失败", res.errMsg);
+                        },
+                        complete(res) {
+                            console.log("showToast 调用结束", res.errMsg);
+                        },
+                    });
+                });
             }
-        });
-        // 完成鉴权后，便可在 window.h5sdk.ready 里调用 JSAPI
-        window.h5sdk.ready(() => {
-            // window.h5sdk.ready回调函数在环境准备就绪时触发
-            // 调用 getUserInfo API 获取已登录用户的基本信息，详细文档参见https://open.feishu.cn/document/uYjL24iN/ucjMx4yNyEjL3ITM
-            tt.getUserInfo({
-                // getUserInfo API 调用成功回调
-                success(res) {
-                    console.log(`getUserInfo success: ${JSON.stringify(res)}`);
-                    // 单独定义的函数showUser，用于将用户信息展示在前端页面上
-                    showUser(res.userInfo);
-                },
-                // getUserInfo API 调用失败回调
-                fail(err) {
-                    console.log(`getUserInfo failed:`, JSON.stringify(err));
-                },
-            });
-            // 调用 showToast API 弹出全局提示框，详细文档参见https://open.feishu.cn/document/uAjLw4CM/uYjL24iN/block/api/showtoast
-            tt.showToast({
-                title: "鉴权成功",
-                icon: "success",
-                duration: 3000,
-                success(res) {
-                    console.log("showToast 调用成功", res.errMsg);
-                },
-                fail(res) {
-                    console.log("showToast 调用失败", res.errMsg);
-                },
-                complete(res) {
-                    console.log("showToast 调用结束", res.errMsg);
-                },
-            });
         });
     }
 
