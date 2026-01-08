@@ -17,7 +17,7 @@
 <body>
 Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
 
-<div class="img" style="display: none;">
+<div id="conent" class="img" style="display: none;">
     <!-- 头像 -->
     <div id="img_div" class="img_div"></div>
     <span class="text_hello">Hello</span>
@@ -48,7 +48,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
             lang === "zh_CN" || lang === "zh-CN" ? "欢迎使用飞书" : "welcome to Feishu"
         );
 
-        $("#img_div").show();
+        $("#conent").show();
     }
     function camera() {
       tt.chooseImage({
