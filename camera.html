@@ -13,42 +13,44 @@
     <script>
         var vConsole = new window.VConsole();
     </script>
+    
     <style>
         /* 居中容器 */
         #content {
             display: flex;
-            justify-content: center;  /* 水平居中 */
-            align-items: center;      /* 垂直居中 */
-            flex-direction: column;   /* 垂直排列多个按钮 */
-            height: 80vh;             /* 占屏幕大部分高度 */
-            gap: 20px;                /* 按钮之间间距 */
+            justify-content: center;   /* 水平居中 */
+            align-items: center;       /* 垂直居中 */
+            flex-direction: column;    /* 垂直排列多个按钮 */
+            height: 80vh;              /* 占屏幕大部分高度 */
+            gap: 30px;                 /* 按钮之间间距 */
             padding: 20px;
         }
-    
+        
         /* #content 下所有按钮样式 */
         #content button {
-            font-size: 1.5rem;         /* 字体大一点 */
-            padding: 15px 30px;        /* 内边距 */
-            border-radius: 10px;       /* 圆角 */
+            font-size: 2.5rem;         /* 字体更大 */
+            padding: 25px 50px;        /* 内边距加大 */
+            border-radius: 15px;       /* 圆角更明显 */
             background-color: #007bff; /* 蓝色背景 */
             color: white;              /* 白色文字 */
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.25);
             transition: transform 0.2s;
-            width: 200px;              /* 固定宽度，手机端好操作 */
-            max-width: 80vw;           /* 手机屏幕自适应 */
+            width: 250px;              /* 固定宽度 */
+            max-width: 90vw;           /* 手机屏幕自适应 */
         }
-    
+        
         #content button:active {
             transform: scale(0.95);    /* 点击缩小效果 */
         }
-    
-        /* 响应式优化：小屏幕字体和按钮更大 */
+        
+        /* 响应式优化：更小屏幕字体和按钮更大 */
         @media (max-width: 480px) {
             #content button {
-                font-size: 1.8rem;
-                padding: 20px 40px;
+                font-size: 3rem;
+                padding: 30px 60px;
+                width: 90vw;
             }
         }
     </style>
