@@ -17,7 +17,7 @@
 <body>
 Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
 
-<div class="img">
+<div class="img" style="display: none;">
     <!-- 头像 -->
     <div id="img_div" class="img_div"></div>
     <span class="text_hello">Hello</span>
@@ -25,6 +25,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
     <div id="hello_text_name" class="text_hello_name"></div>
     <!-- 欢迎语 -->
     <div id="hello_text_welcome" class="text_hello_welcome"></div>
+    <button onclick="camera()">拍照</button>
 </div>
 
 
@@ -34,7 +35,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
 
     function showUser(res) {
         $("#img_div").html(
-            `<img src="${res.avatarUrl}" width="100%" height=""100%/>`
+            `<img src="${res.avatarUrl}" width="100px" height="100px"/>`
         );
 
         $("#hello_text_name").text(
@@ -46,8 +47,25 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
         $("#hello_text_welcome").text(
             lang === "zh_CN" || lang === "zh-CN" ? "欢迎使用飞书" : "welcome to Feishu"
         );
-    }
 
+        $("#img_div").show();
+    }
+    function camera() {
+      tt.chooseImage({
+          sourceType: ['camera'],
+          count: 2,
+          sizeType:["original","compressed"],
+          // cameraDevice: 'front',
+          isSaveToAlbum: '0',
+          success (res) {
+            console.log(res.tempFilePaths, res.tempFiles);
+          },
+          fail (res) {
+            console.log(`chooseImage 调用失败`);
+          }
+      });
+    }
+    
     function apiAuth() {
         console.log("start apiAuth");
         if (!window.h5sdk) {
