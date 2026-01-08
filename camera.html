@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>h5sdk config demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://lf1-cdn-tos.bytegoofy.com/goofy/lark/op/h5-js-sdk-1.5.16.js"
+    ></script>
+    <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script>
+    <script src='https://lf-package-cn.feishucdn.com/obj/feishu-static/op/fe/devtools_frontend/remote-debug-0.0.1-alpha.6.js'></script>
+    <script>
+        var vConsole = new window.VConsole();
+    </script>
+</head>
+<body>
+<div id="conent" style="display: none;">
+    <button onclick="camera()">拍照</button>
+</div>
+
+
+</body>
+<script>
+    let lang = window.navigator.language;
+
+    function camera() {
+      tt.chooseImage({
+          sourceType: ['camera'],
+          count: 2,
+          sizeType:["original","compressed"],
+          // cameraDevice: 'front',
+          isSaveToAlbum: '0',
+          success (res) {
+            console.log(res.tempFilePaths, res.tempFiles);
+          },
+          fail (res) {
+            console.log(`chooseImage 调用失败`);
+          }
+      });
+    }
+    
+    function apiAuth() {
+        console.log("start apiAuth");
+        if (!window.h5sdk) {
+            console.log("invalid h5sdk");
+            alert("please open in feishu");
+            return;
+        }
+
+        // 调用config接口的当前网页url
+        const url = location.href.split("#")[0];
+        console.log("接入方前端将需要鉴权的url发给接入方服务端,url为:", url);
+        // 向接入方服务端发起请求，获取鉴权参数（appId、timestamp、nonceStr、signature）
+        // 使用 fetch 获取 config 参数
+        fetch("https://open.feishu.cn/anycross/trigger/callback/MGMyMDkxMmQ3MWIyZmI5ZmZhMTFjZTE5YmY4YTM3ZDA0", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url })
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(
+                    "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
+                );
+                console.log(window.h5sdk.config);
+                // 通过error接口处理API验证失败后的回调
+                window.h5sdk.error((err) => {
+                    throw ("h5sdk error:", JSON.stringify(err));
+                });
+                // 调用config接口进行鉴权
+                window.h5sdk.config({
+                    appId: res.appid,
+                    timestamp: res.timestamp,
+                    nonceStr: res.noncestr,
+                    signature: res.signature,
+                    jsApiList: ["scope.userInfo"],
+                    //鉴权成功回调
+                    onSuccess: (res) => {
+                        console.log(`config success: ${JSON.stringify(res)}`);
+                    },
+                    //鉴权失败回调
+                    onFail: (err) => {
+                        console.error(`config failed: ${JSON.stringify(err)}`);
+                    },
+                });
+
+                window.h5sdk.ready(() => {
+                    $("#content").show();
+                });
+            })
+            .catch(err => console.error("fetch error", err));
+    }
+
+    $(document).ready(function() {
+        apiAuth();
+    });
+
+</script>
+</html>
