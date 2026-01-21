@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Docs Components SDK</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://sf1-scmcdn-cn.feishucdn.com/obj/feishu-static/docComponentSdk/lib/1.0.13.js"></script>
+</head>
+<body>
+Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
+
+<div id="conent" class="img" style="display: none;">
+   
+</div>
+
+
+</body>
+<script>
+    var myComponent;
+    function init(res){
+       console.log("init res", res);
+       const doc_url = $('#doc_url').val();
+       myComponent = new window.DocComponentSdk({
+        src: doc_url,
+        mount: document.querySelector('#conent'),  // 将组件挂在到哪个元素上
+        auth: {
+          openId: res.openId,
+          signature: res.signature, // 签名
+          appId:res.appId,     // 应用 appId
+          timestamp: res.timestamp, // 时间戳（毫秒[number]）
+          nonceStr: res.noncestr,  // 随机字符串
+          url: res.url,       // 参与签名加密计算的url
+          jsApiList: ["scope.userInfo"], // 指定要使用的组件，请根据对应组件的开发文档填写。如云文档组件，填写['DocsComponent']
+        },
+        onAuthError: (error) => {
+          console.error("认证错误:", error); // 输出错误详情
+        },
+        onError: (error) => {
+          console.error("组件加载错误:", error); // 输出错误详情
+        },
+      });
+      myComponent.start().then(() => {
+      });
+  
+    }
+
+    function destroy() {
+      // 销毁组件
+      myComponent.destroy()
+    }
+ 
+    function apiAuth() {
+        console.log("start apiAuth");
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+        console.log("Auth code", code);
+        
+        const url = location.href.split("#")[0];
+        console.log("接入方前端将需要鉴权的url发给接入方服务端,url为:", url);
+        
+        // 向接入方服务端发起请求，获取鉴权参数（appId、timestamp、nonceStr、signature）
+        // 使用 fetch 获取 config 参数
+        fetch("https://open.feishu.cn/anycross/trigger/callback/MGMyMDkxMmQ3MWIyZmI5ZmZhMTFjZTE5YmY4YTM3ZDA0", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url, code })
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(
+                    "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
+                );
+                
+                // 调用config接口进行鉴权
+                window.webComponent.config({
+                    openId: res.openId,
+                    appId: res.appid,
+                    timestamp: res.timestamp,
+                    nonceStr: res.noncestr,
+                    signature: res.signature,
+                    url: url,
+                    jsApiList: ["scope.userInfo"],
+                    locale: window.navigator.language
+                }).then(res=>{
+                  // 可以在这里进行组件动态渲染
+                  init(res)
+                });
+
+    }
+
+</script>
+</html>
