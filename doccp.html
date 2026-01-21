@@ -30,9 +30,9 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
         src: doc_url,
         mount: document.querySelector('#conent'),  // 将组件挂在到哪个元素上
         auth: {
-          openId: res.openId,
+          openId: "ou_3496ef3e71ad9e3161b7af9ea51514e3",
           signature: res.signature, // 签名
-          appId:res.appId,     // 应用 appId
+          appId:res.appid,     // 应用 appId
           timestamp: res.timestamp, // 时间戳（毫秒[number]）
           nonceStr: res.noncestr,  // 随机字符串
           url: res.url,       // 参与签名加密计算的url
@@ -76,21 +76,21 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
                 console.log(
                     "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
                 );
-                
+                init(res)
                 // 调用config接口进行鉴权
-                window.webComponent.config({
-                    openId: res.openId,
-                    appId: res.appid,
-                    timestamp: res.timestamp,
-                    nonceStr: res.noncestr,
-                    signature: res.signature,
-                    url: url,
-                    jsApiList: ["scope.userInfo"],
-                    locale: window.navigator.language
-                }).then(res=>{
-                  // 可以在这里进行组件动态渲染
-                  init(res)
-                });
+                // window.webComponent.config({
+                //     openId: res.openId,
+                //     appId: res.appid,
+                //     timestamp: res.timestamp,
+                //     nonceStr: res.noncestr,
+                //     signature: res.signature,
+                //     url: url,
+                //     jsApiList: ["scope.userInfo"],
+                //     locale: window.navigator.language
+                // }).then(res=>{
+                //   // 可以在这里进行组件动态渲染
+                  
+                // });
 
     });
   }
