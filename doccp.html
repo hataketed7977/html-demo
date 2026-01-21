@@ -9,7 +9,7 @@
 <body>
 Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
 
-<div id="conent" class="img" style="display: none;">
+<div id="conent">
    
 </div>
 
@@ -60,7 +60,7 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
         
         // 向接入方服务端发起请求，获取鉴权参数（appId、timestamp、nonceStr、signature）
         // 使用 fetch 获取 config 参数
-        fetch("https://open.feishu.cn/anycross/trigger/callback/MGMyMDkxMmQ3MWIyZmI5ZmZhMTFjZTE5YmY4YTM3ZDA0", {
+        fetch("https://open.feishu.cn/anycross/trigger/callback/ODAzY2Y3ODBlNWEyNDY3NmNkMTQ4ZDY5NzY1N2RiZWQw", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ url, code })
@@ -87,6 +87,6 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
                 });
 
     }
-
+  }
 </script>
 </html>
