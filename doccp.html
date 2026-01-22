@@ -49,6 +49,16 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
         },
       });
       myComponent.start().then(() => {
+          myComponent.setFeatureConfig({
+            extensions: {
+                like: {
+                    "disable": true // 隐藏点赞
+                },
+                suiteNavBar:{
+                     "disable": true
+                }
+            }
+        });
       });
   
     }
