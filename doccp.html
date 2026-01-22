@@ -53,16 +53,16 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
         },
         onMountSuccess: (mc) => {
             console.log(mc);
-            myComponent.setFeatureConfig({
-                extensions: {
-                    like: {
-                        "disable": true // 隐藏点赞
-                    },
-                    suiteNavBar:{
-                         "disable": true
-                    }
-                }
-            });
+            // myComponent.setFeatureConfig({
+            //     extensions: {
+            //         like: {
+            //             "disable": true // 隐藏点赞
+            //         },
+            //         suiteNavBar:{
+            //              "disable": true
+            //         }
+            //     }
+            // });
             console.log("setFeatureConfig");
         },
         onAuthError: (error) => {
