@@ -37,6 +37,9 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
           nonceStr: res.noncestr,  // 随机字符串
           url: res.url,       // 参与签名加密计算的url
           jsApiList: ['DocsComponent'], // 指定要使用的组件，请根据对应组件的开发文档填写。如云文档组件，填写['DocsComponent']
+          size: {
+              minHeight: "800px"
+          }
         },
         onAuthError: (error) => {
           console.error("认证错误:", error); // 输出错误详情
@@ -71,28 +74,13 @@ Doc: <input id="doc_url"/> <button onclick="apiAuth()">Auth</button>
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ url, code })
         })
-            .then(res => res.json())
-            .then(res => {
-                console.log(
-                    "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
-                );
-                init(res)
-                // 调用config接口进行鉴权
-                // window.webComponent.config({
-                //     openId: res.openId,
-                //     appId: res.appid,
-                //     timestamp: res.timestamp,
-                //     nonceStr: res.noncestr,
-                //     signature: res.signature,
-                //     url: url,
-                //     jsApiList: ["scope.userInfo"],
-                //     locale: window.navigator.language
-                // }).then(res=>{
-                //   // 可以在这里进行组件动态渲染
-                  
-                // });
-
-    });
-  }
+        .then(res => res.json())
+        .then(res => {
+            console.log(
+                "接入方服务端返回给接入方前端的结果(前端调用config接口的所需参数):", res
+            );
+            init(res)
+        });
+    }
 </script>
 </html>
