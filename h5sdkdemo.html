@@ -26,6 +26,8 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
     <!-- 欢迎语 -->
     <div id="hello_text_welcome" class="text_hello_welcome"></div>
     <button onclick="camera()">拍照</button>
+    <br>
+    <button onclick="appBadge()">角标授权</button>
 </div>
 
 
@@ -64,6 +66,41 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
             console.log(`chooseImage 调用失败`);
           }
       });
+    }
+
+    function appBadge(){
+        const SCOPE_BADGE = "scope.appBadge";
+        //第一步：获取用户当前授权状态
+        tt.getSetting({
+          success: (res) => {
+            console.log("get setting success setting=", res);
+            if (!res || !res.authSetting || !res.authSetting.hasOwnProperty(SCOPE_BADGE)) {
+            // 第二步，首次授权，则请求授权
+              tt.authorize({
+                scope: SCOPE_BADGE,
+                success(res) {
+                  console.log("auth appBadge success res=", res);
+                },
+                fail(res) {
+                  console.error("auth badge fail res=", res);
+                },
+              });
+              return;
+            }
+          },
+          fail(res) {
+            console.error("get setting fail res=", res);
+          },
+        });
+        tt.authorize({
+            scope: "scope.appBadge",
+            success(res) {
+              console.log(JSON.stringify(res));
+            },
+            fail(res) {
+              console.log(`authorize fail: ${JSON.stringify(res)}`);
+            }
+        });
     }
     
     function apiAuth() {
