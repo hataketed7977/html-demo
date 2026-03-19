@@ -8,11 +8,11 @@
       type="text/javascript"
       src="https://lf1-cdn-tos.bytegoofy.com/goofy/lark/op/h5-js-sdk-1.5.16.js"
     ></script>
-    <!-- <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script> -->
+    <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script>
     <script src='https://lf-package-cn.feishucdn.com/obj/feishu-static/op/fe/devtools_frontend/remote-debug-0.0.1-alpha.6.js'></script>
-    <!-- <script>
+    <script>
         var vConsole = new window.VConsole();
-    </script> -->
+    </script>
 </head>
 <body>
 Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
@@ -106,30 +106,6 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
     }
 
     function getDeviceId(){
-        //第一步：获取用户当前授权状态
-        tt.getSetting({
-          success: (res) => {
-            console.log("get setting success setting=", res);
-            if (!res || !res.authSetting || !res.authSetting.hasOwnProperty("scope.deviceID")) {
-            // 第二步，首次授权，则请求授权
-              tt.authorize({
-                scope: "getDeviceID",
-                success(res) {
-                  console.log("auth device id success res=", res);
-                },
-                fail(res) {
-                  alert("auth device id fail res=" + JSON.stringify(res));
-                },
-              });
-              return;
-            }
-          },
-          fail(res) {
-            console.error("get setting fail res=", res);
-          },
-        });
-
-        
         tt.getDeviceID({
             success(res) {
               alert("get device id success res="+ JSON.stringify(res));
