@@ -28,6 +28,8 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
     <button onclick="camera()">拍照</button>
     <br>
     <button onclick="appBadge()">角标授权</button>
+    <br>
+    <button onclick="getDeviceId()">DeviceId</button>
 </div>
 
 
@@ -96,6 +98,50 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
             scope: "scope.appBadge",
             success(res) {
               console.log(JSON.stringify(res));
+            },
+            fail(res) {
+              console.log(`authorize fail: ${JSON.stringify(res)}`);
+            }
+        });
+    }
+
+    function getDeviceId(){
+        const SCOPE_DEVICEID = "scope.deviceID";
+        //第一步：获取用户当前授权状态
+        tt.getSetting({
+          success: (res) => {
+            console.log("get setting success setting=", res);
+            if (!res || !res.authSetting || !res.authSetting.hasOwnProperty(SCOPE_DEVICEID)) {
+            // 第二步，首次授权，则请求授权
+              tt.authorize({
+                scope: SCOPE_DEVICEID,
+                success(res) {
+                  console.log("auth device id success res=", res);
+                },
+                fail(res) {
+                  console.error("auth device id fail res=", res);
+                },
+              });
+              return;
+            }
+          },
+          fail(res) {
+            console.error("get setting fail res=", res);
+          },
+        });
+
+        
+        tt.authorize({
+            scope: SCOPE_DEVICEID,
+            success(res) {
+              tt.getDeviceID({
+                success(res) {
+                  console.log("get device id success res=", JSON.stringify(res));
+                },
+                fail(res) {
+                  console.error("get device id fail res=", JSON.stringify(res));
+                },
+              });
             },
             fail(res) {
               console.log(`authorize fail: ${JSON.stringify(res)}`);
