@@ -113,7 +113,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
             if (!res || !res.authSetting || !res.authSetting.hasOwnProperty("scope.deviceID")) {
             // 第二步，首次授权，则请求授权
               tt.authorize({
-                scope: "deviceID",
+                scope: "getDeviceID",
                 success(res) {
                   console.log("auth device id success res=", res);
                 },
@@ -130,22 +130,14 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
         });
 
         
-        tt.authorize({
-            scope: "scope.getDeviceID",
+        tt.getDeviceID({
             success(res) {
-              tt.getDeviceID({
-                success(res) {
-                  alert("get device id success res="+ JSON.stringify(res));
-                },
-                fail(res) {
-                  alert("get device id fail res="+ JSON.stringify(res));
-                },
-              });
+              alert("get device id success res="+ JSON.stringify(res));
             },
             fail(res) {
-              alert("auth device id2 fail res=" + JSON.stringify(res));
-            }
-        });
+              alert("get device id fail res="+ JSON.stringify(res));
+            },
+          });
     }
     
     function apiAuth() {
