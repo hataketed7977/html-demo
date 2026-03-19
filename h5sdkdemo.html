@@ -184,7 +184,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
                     timestamp: res.timestamp,
                     nonceStr: res.noncestr,
                     signature: res.signature,
-                    jsApiList: ["scope.userInfo","scope.deviceID"],
+                    jsApiList: ["getUserInfo","getDeviceID"],
                     //鉴权成功回调
                     onSuccess: (res) => {
                         console.log(`config success: ${JSON.stringify(res)}`);
