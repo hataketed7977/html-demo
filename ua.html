@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UA debug</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script>
+    <script src='https://lf-package-cn.feishucdn.com/obj/feishu-static/op/fe/devtools_frontend/remote-debug-0.0.1-alpha.6.js'></script>
+    <script>
+        var vConsole = new window.VConsole();
+    </script>
+</head>
+<body>
+<div id="conent">
+    
+</div>
+
+
+</body>
+<script>
+    const ua = navigator.userAgent.toLowerCase();
+    console.log(ua)
+    $("#img_div").html(ua);
+    
+    let isHarmonyOS = false;
+    if(ua.includes('harmony') || ua.includes('harmonyos')){
+      const harmonyVersionMatch = ua.match(/openharmony\s+(\d+\.\d+(\.\d+)?)/);
+      console.log("harmonyVersionMatch: " + harmonyVersionMatch);
+      if (harmonyVersionMatch) {
+            const version = parseFloat(harmonyVersionMatch[1]);
+            console.log("harmony:" + version)
+            if (version >= 5) {
+                isHarmonyOS = true;
+            }
+        }
+    }
+    console.log("isHarmonyOS: " + isHarmonyOS);
+  
+    const isAndroid = !isHarmonyOS && (ua.indexOf('android') > -1 || ua.indexOf('adr') > -1);
+    console.log("isAndroid: " + isAndroid);
+
+    const isIos = !isHarmonyOS && !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/i);
+    console.log("isIos: " + isIos);
+    
+    const isWeChat = ua.indexOf('micromessenger') > -1;
+    console.log("isWeChat: " + isWeChat);
+  
+    const isIpad = !isHarmonyOS && (ua.indexOf('ipad') > -1 || 
+      (window.navigator.platform === 'MacIntel' && 
+       window.navigator.maxTouchPoints > 1 && 
+       !(window as any).MSStream));
+    console.log("isIpad: " + isIpad);
+  
+    const isMacOS = !isHarmonyOS && !isIos && /macintosh|mac os x/i.test(ua);
+    console.log("isMacOS: " + isMacOS);
+  
+    const isWindows = !isHarmonyOS && /windows|win32/i.test(ua);
+    console.log("isWindows: " + isWindows);
+</script>
+</html>
