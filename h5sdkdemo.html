@@ -30,6 +30,7 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
     <button onclick="appBadge()">角标授权</button>
     <br>
     <button onclick="getDeviceId()">DeviceId</button>
+    <button onclick="openChat()">Open Chat</button>
 </div>
 
 
@@ -54,6 +55,21 @@ Token: <input id="token"/> <button onclick="apiAuth()">Auth</button>
 
         $("#conent").show();
     }
+    function openChat() {
+      tt.toggleChat({
+          "oc_81c1555d9b25d2b12dd60639f03806a2",
+          width: 400,
+          needSidebar: true,
+          isKeep: false,
+          success(res) {
+            console.log(JSON.stringify(res));
+          },
+          fail(res) {
+            console.log(`toggleChat fail: ${JSON.stringify(res)}`);
+          },
+      });
+    }
+
     function camera() {
       tt.chooseImage({
           sourceType: ['camera'],
